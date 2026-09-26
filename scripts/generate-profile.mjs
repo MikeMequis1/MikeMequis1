@@ -1,10 +1,15 @@
-// sharpOS profile asset generator.
+// shrpOS profile asset generator.
 //
 // Produces the static SVG assets used by the profile README. No dependencies:
 // node scripts/generate-profile.mjs
 //
 // The generated SVGs are committed to assets/ so GitHub can serve them directly.
-// Re-run this script after editing colours, text or layout below.
+// Re-run this script after editing colours, text or timing below.
+//
+// Animation model: CSS keyframes inside the SVG. This keeps everything
+// JavaScript-free and works when the file is referenced through <img> (GitHub
+// serves repo SVGs as images). If animation is unsupported or disabled, the
+// final frame is still the complete message.
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -27,7 +32,6 @@ const T = {
 const FONT =
   "'Cascadia Mono','JetBrains Mono','Fira Code',Consolas,'Courier New',monospace";
 
-// Scalars are placeholders replaced after the template string is built.
 const CW = 0.6; // monospace advance-width factor (0.6em per glyph)
 const BODY_FS = 15;
 
@@ -90,10 +94,13 @@ function titleBar(w, label, version) {
   )}</text>`;
 }
 
+// Disables the decorative animations for visitors who prefer reduced motion.
+// With animation off, nothing is clipped, so every line stays visible.
 function reducedMotion() {
   return `    @media (prefers-reduced-motion: reduce) {
       .type, .cursor, .pulse { animation: none !important; }
-      .cursor { opacity: 1; }
+      .type { clip-path: none; }
+      .cursor { opacity: 1; transform: none; }
     }`;
 }
 
@@ -106,54 +113,66 @@ function writeAsset(name, svg) {
 // ---------------------------------------------------------------- boot asset
 
 // Pads a label with dots up to a fixed column so the OK markers line up.
-function bootLine(label, width = 42) {
+function bootLine(label, width = 40) {
   const tail = ' OK';
   const dots = Math.max(2, width - label.length - tail.length);
   return `${label} ${'.'.repeat(dots)}${tail}`;
 }
 
+// Staged boot sequence. The whole reveal lands around 4.5s, then holds on the
+// final frame; only the cursor keeps blinking.
+const BOOT_LINES = [
+  '> Power on',
+  '> POST',
+  '> Initializing kernel',
+  '> Loading user profile',
+  '> Connecting to GitHub',
+  '> Loading project registry',
+];
+
 function bootSvg() {
   const W = 880;
-  const H = 356;
+  const H = 384;
   const x = 30;
   const f = JSON.stringify(FONT);
 
-  const lines = [
-    { t: bootLine('> Initializing kernel'), d: 0.6 },
-    { t: bootLine('> Loading user profile'), d: 1.25 },
-    { t: bootLine('> Loading development database'), d: 1.9 },
-    { t: bootLine('> Connecting to GitHub'), d: 2.55 },
-    { t: bootLine('> Loading project registry'), d: 3.2 },
-  ];
+  const start = 0.45;
+  const step = 0.42;
+  const lines = BOOT_LINES.map((t, i) => ({
+    t: bootLine(t),
+    d: Math.round((start + i * step) * 100) / 100,
+  }));
+
+  const rowY = (i) => 112 + i * 28;
+  const readyY = rowY(BOOT_LINES.length) + 24;
+  const welcomeY = readyY + 40;
+  const readyDelay = Math.round((lines[lines.length - 1].d + 0.55) * 100) / 100;
+  const cursorDelay = Math.round((readyDelay + 0.45) * 100) / 100;
 
   const rows = lines
     .map(
       (l, i) =>
-        `  <text x="${x}" y="${
-          118 + i * 30
-        }" class="type l${i + 1}" font-family=${f} font-size="${BODY_FS}" fill="${
+        `  <text x="${x}" y="${rowY(
+          i
+        )}" class="type l${i + 1}" font-family=${f} font-size="${BODY_FS}" fill="${
           T.text
         }">${esc(l.t)}</text>`
     )
     .join('\n');
 
   const rules = [
-    `.bios{animation:type .5s steps(26,end) .15s both}`,
-    `.l1{animation-delay:${lines[0].d}s}`,
-    `.l2{animation-delay:${lines[1].d}s}`,
-    `.l3{animation-delay:${lines[2].d}s}`,
-    `.l4{animation-delay:${lines[3].d}s}`,
-    `.l5{animation-delay:${lines[4].d}s}`,
-    `.ready{animation:type .5s steps(12,end) 4.15s both}`,
-    `.welcome{animation:type .9s steps(17,end) 4.7s both}`,
+    `.bios{animation:type .5s steps(22,end) .1s both}`,
+    ...lines.map((l, i) => `.l${i + 1}{animation-delay:${l.d}s}`),
+    `.ready{animation:type .45s steps(12,end) ${readyDelay}s both}`,
+    `.welcome{animation:type .8s steps(17,end) ${cursorDelay}s both}`,
   ].join('\n    ');
 
   const cursorX = x + textWidth('SYSTEM READY') + 12;
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">
-  <title>sharpOS boot sequence</title>
-  <desc>sharpOS BIOS initializes the kernel, user profile, development database, GitHub connection and project registry, then prints SYSTEM READY and WELCOME, MARCELO.</desc>
+  <title>shrpOS boot sequence</title>
+  <desc>shrpOS BIOS v1.0 boots: power on, POST, kernel, user profile, GitHub connection and project registry all report OK, then SYSTEM READY and WELCOME, MARCELO.</desc>
 ${defs(W, H)}
   <style>
     @keyframes type {
@@ -161,23 +180,23 @@ ${defs(W, H)}
       to   { clip-path: inset(-12% 0 -12% 0); }
     }
     @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-    .type { transform-box: fill-box; animation-name: type; animation-duration: .55s; animation-timing-function: steps(40, end); animation-fill-mode: both; }
+    .type { transform-box: fill-box; animation-name: type; animation-duration: .4s; animation-timing-function: steps(40, end); animation-fill-mode: both; }
     ${rules}
-    .cursor { animation: blink 1.06s step-end 4.7s infinite; }
+    .cursor { animation: blink 1.06s step-end ${cursorDelay}s infinite; }
 ${reducedMotion()}
   </style>
-${backdrop(W, H, titleBar(W, 'sharpOS BIOS v1.0', 'POST'))}
-  <text x="${x}" y="78" class="type bios" font-family=${f} font-size="13" fill="${
+${backdrop(W, H, titleBar(W, 'shrpOS BIOS v1.0', 'POST'))}
+  <text x="${x}" y="74" class="type bios" font-family=${f} font-size="13" fill="${
     T.dim
-  }" letter-spacing="1">sharpOS BIOS v1.0  ::  power-on self-test</text>
+  }" letter-spacing="1">shrpOS BIOS v1.0  ::  cold boot</text>
 ${rows}
-  <text x="${x}" y="284" class="type ready" font-family=${f} font-size="${BODY_FS}" font-weight="bold" fill="${
+  <text x="${x}" y="${readyY}" class="type ready" font-family=${f} font-size="${BODY_FS}" font-weight="bold" fill="${
     T.green
   }" filter="url(#glow)">SYSTEM READY</text>
-  <rect class="cursor" x="${cursorX}" y="270" width="9" height="17" fill="${
-    T.green
-  }"/>
-  <text x="${x}" y="326" class="type welcome" font-family=${f} font-size="22" font-weight="bold" fill="${
+  <rect class="cursor" x="${cursorX}" y="${
+    readyY - 14
+  }" width="9" height="17" fill="${T.green}"/>
+  <text x="${x}" y="${welcomeY}" class="type welcome" font-family=${f} font-size="22" font-weight="bold" fill="${
     T.bright
   }" letter-spacing="2" filter="url(#glow)">WELCOME, MARCELO.</text>
 </svg>`;
@@ -204,8 +223,8 @@ function headerSvg() {
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">
-  <title>sharpOS :: Personal Development Terminal</title>
-  <desc>Terminal header: user Marcelo, node github.com/MikeMequis1, shell /bin/sharp, status ON-LINE.</desc>
+  <title>shrpOS :: Personal Development Terminal</title>
+  <desc>Terminal header: user Marcelo, node github.com/MikeMequis1, shell /bin/shrp, build stable, status on-line.</desc>
 ${defs(W, H)}
   <style>
     @keyframes pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
@@ -214,12 +233,12 @@ ${defs(W, H)}
     .cursor { animation: blink 1.06s step-end infinite; }
 ${reducedMotion()}
   </style>
-${backdrop(W, H, titleBar(W, 'sharpOS :: PERSONAL DEVELOPMENT TERMINAL', 'v1.0'))}
-${row(82, 'USER: MARCELO', 'STATUS: ON-LINE', T.bright, T.green)}
+${backdrop(W, H, titleBar(W, 'shrpOS :: PERSONAL DEVELOPMENT TERMINAL', 'v1.1'))}
+${row(82, 'USER: MARCELO', 'STATUS: ONLINE', T.bright, T.green)}
   <circle class="pulse" cx="${
-    right - textWidth('STATUS: ON-LINE') - 12
+    right - textWidth('STATUS: ONLINE') - 12
   }" cy="77" r="5" fill="${T.green}"/>
-${row(116, 'NODE: github.com/MikeMequis1', 'SHELL: /bin/sharp')}
+${row(116, 'NODE: github.com/MikeMequis1', 'SHELL: /bin/shrp')}
 ${row(150, 'ROLE: SOFTWARE DEVELOPER', 'BUILD: STABLE')}
   <text x="${left}" y="188" font-family=${f} font-size="${BODY_FS}" fill="${
     T.dim
@@ -243,8 +262,8 @@ function footerSvg() {
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">
-  <title>sharpOS status bar</title>
-  <desc>sharpOS system status: session active, memory OK, network OK, end of file.</desc>
+  <title>shrpOS status bar</title>
+  <desc>shrpOS system status: session active, memory OK, network OK, end of file.</desc>
 ${defs(W, H)}
   <style>
     @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
@@ -254,7 +273,7 @@ ${reducedMotion()}
 ${backdrop(W, H, '')}
   <text x="${left}" y="44" font-family=${f} font-size="13" fill="${
     T.green
-  }" letter-spacing="1">sharpOS v1.0</text>
+  }" letter-spacing="1">shrpOS v1.1</text>
   <text x="${W / 2}" y="44" text-anchor="middle" font-family=${f} font-size="13" fill="${
     T.dim
   }" letter-spacing="1">SESSION ACTIVE  ::  MEM OK  ::  NET OK</text>
@@ -270,9 +289,9 @@ ${backdrop(W, H, '')}
 }
 
 const written = [
-  writeAsset('sharpOS-boot.svg', bootSvg()),
-  writeAsset('sharpOS-header.svg', headerSvg()),
-  writeAsset('sharpOS-footer.svg', footerSvg()),
+  writeAsset('shrpOS-boot.svg', bootSvg()),
+  writeAsset('shrpOS-header.svg', headerSvg()),
+  writeAsset('shrpOS-footer.svg', footerSvg()),
 ];
 
 for (const file of written) console.log(`generated ${file}`);

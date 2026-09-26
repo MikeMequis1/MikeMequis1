@@ -1,34 +1,37 @@
 <p align="center">
-  <img src="./assets/sharpOS-header.svg" alt="sharpOS Personal Development Terminal — USER: MARCELO — STATUS: ON-LINE — NODE: github.com/MikeMequis1 — SHELL: /bin/sharp" width="880">
+  <img src="./assets/shrpOS-header.svg" alt="shrpOS Personal Development Terminal — USER: MARCELO — STATUS: ONLINE — NODE: github.com/MikeMequis1 — SHELL: /bin/shrp — BUILD: STABLE" width="880">
 </p>
 
-<p align="center"><sub><code>sharpOS</code> is an original fictional terminal interface. The human behind it builds software.</sub></p>
+<p align="center"><sub><code>shrpOS</code> is an original fictional terminal interface. The human behind it builds software.</sub></p>
 
 <p align="center">
-  <img src="./assets/sharpOS-boot.svg" alt="sharpOS BIOS boot log: initializing kernel, loading user profile, loading development database, connecting to GitHub, loading project registry — all OK. SYSTEM READY. WELCOME, MARCELO." width="880">
+  <img src="./assets/shrpOS-boot.svg" alt="shrpOS BIOS v1.1 boot: power on, POST, kernel, user profile, GitHub connection and project registry all report OK, then SYSTEM READY and WELCOME, MARCELO." width="880">
 </p>
 
 ```text
 ╔════════════════════════════════════════════════════════════╗
-║ sharpOS :: PERSONAL DEVELOPMENT TERMINAL                   ║
+║ shrpOS :: PERSONAL DEVELOPMENT TERMINAL                    ║
 ╠════════════════════════════════════════════════════════════╣
-║ USER: MARCELO                              STATUS: ON-LINE ║
-║ NODE: github.com/MikeMequis1             SHELL: /bin/sharp ║
+║ USER: MARCELO                              STATUS: ONLINE  ║
+║ NODE: github.com/MikeMequis1              SHELL: /bin/shrp ║
 ║ ROLE: SOFTWARE DEVELOPER                     BUILD: STABLE ║
 ╚════════════════════════════════════════════════════════════╝
 ```
+
+`▶` marks a collapsible module. Select one to open it.
 
 <details>
 <summary>▶ VIEW RAW BOOT LOG</summary>
 
 ```text
-sharpOS BIOS v1.0  ::  power-on self-test
+shrpOS BIOS v1.0  ::  cold boot
 
-> Initializing kernel .................. OK
-> Loading user profile ................. OK
-> Loading development database ......... OK
-> Connecting to GitHub ................. OK
-> Loading project registry ............. OK
+> Power on ........................... OK
+> POST ............................... OK
+> Initializing kernel ................ OK
+> Loading user profile ............... OK
+> Connecting to GitHub ............... OK
+> Loading project registry ........... OK
 
 SYSTEM READY_
 WELCOME, MARCELO.
@@ -70,7 +73,6 @@ MODE ........ build · break · learn · repeat
 │      Dust: An Elysian Tail modding platform            │
 │                                                        │
 │      STATUS  :  ACTIVE DEVELOPMENT                     │
-│      REPO    :  [ pending publication ]                │
 │                                                        │
 │      MODULES :  C# · .NET · HARMONY · MONO             │
 │                 FNA · LINUX · WINDOWS                  │
@@ -78,7 +80,7 @@ MODE ........ build · break · learn · repeat
 └────────────────────────────────────────────────────────┘
 ```
 
-`Asher` is a modding platform for *Dust: An Elysian Tail*. Repository and documentation links will be published here once available. Additional entries will be appended as `[02]`, `[03]`, … as they become public.
+`Asher` is a modding platform for *Dust: An Elysian Tail*. Repository and documentation links will appear here once they are public. New entries are appended as `[02]`, `[03]`, and so on.
 
 </details>
 
@@ -125,7 +127,7 @@ Tools currently used, explored, or relevant to active projects. No proficiency s
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=MikeMequis1&background=0b120b&border=1f8f3f&stroke=00ff41&ring=00ff41&fire=00ff41&currStreakNum=00ff41&currStreakLabel=00ff41&sideNums=8bf0a4&sideLabels=8bf0a4&dates=1f8f3f&hide_border=false" alt="Contribution telemetry: current streak, longest streak and total public contributions for MikeMequis1">
 </p>
 
-Live counters are pulled from the GitHub public API and may lag behind the profile. If a feed is unavailable, the authoritative numbers — including the primary language breakdown — remain visible at [github.com/MikeMequis1](https://github.com/MikeMequis1).
+Live counters come from the GitHub public API and may lag behind the profile. If a feed is unavailable, the authoritative numbers — including the primary language breakdown — remain visible at [github.com/MikeMequis1](https://github.com/MikeMequis1).
 
 </details>
 
@@ -135,15 +137,13 @@ Live counters are pulled from the GitHub public API and may lag behind the profi
 | MODULE | ENDPOINT | STATUS |
 | :-- | :-- | :-- |
 | GITHUB | [github.com/MikeMequis1](https://github.com/MikeMequis1) | ONLINE |
-| LINKEDIN | pending configuration | OFFLINE |
-| ASHER REPO | pending publication | PENDING |
-| ASHER DOCS | pending publication | PENDING |
-| CONTACT | pending configuration | PENDING |
+| REPOSITORIES | [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories) | ONLINE |
+| ISSUES / CONTACT | [github.com/MikeMequis1/MikeMequis1/issues](https://github.com/MikeMequis1/MikeMequis1/issues) | ONLINE |
 
 </details>
 
 <p align="center">
-  <img src="./assets/sharpOS-footer.svg" alt="sharpOS status bar: sharpOS v1.0 — session active, memory OK, network OK — EOF" width="880">
+  <img src="./assets/shrpOS-footer.svg" alt="shrpOS status bar: shrpOS v1.1 — session active, memory OK, network OK — EOF" width="880">
 </p>
 
 <details>
@@ -155,12 +155,12 @@ The three terminal panels in `assets/` are generated, not hand-drawn:
 node scripts/generate-profile.mjs
 ```
 
-Edit the colour tokens and templates in `scripts/generate-profile.mjs`, then re-run it. Generated SVGs are committed, so viewing the profile requires no build step. The README itself is plain GitHub Flavored Markdown — no JavaScript, no injected CSS.
+Edit the colour tokens, text and timing in `scripts/generate-profile.mjs`, then re-run it. Generated SVGs are committed, so viewing the profile needs no build step. Boot and cursor effects are CSS keyframes inside the SVG — no JavaScript, and the final frame is fully readable if animation never runs. The README itself is plain GitHub Flavored Markdown.
 
 </details>
 
 <!--
-  sharpOS :: profile v1.0
+  shrpOS :: profile v1.1
   Regenerate assets with: node scripts/generate-profile.mjs
-  sharpOS is an original fictional interface; no copyrighted branding is used.
+  shrpOS is an original fictional interface; no copyrighted branding is used.
 -->
