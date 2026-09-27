@@ -85,6 +85,7 @@ timeline without re-implementing frame bookkeeping.
 - `fieldRow(t, row, label, value, labelColor, valueColor)` — reveals one
   label/value row with the cursor after the value.
 - `cleanAndReset(t, lastRow)` — the shared clean → reset tail.
+- `mascot(t, row)` — draws the tiny terminal character (see below), one blink.
 
 `buildBoot()` is a bespoke builder: it predates the `Terminal` model and is kept
 unchanged to preserve the validated boot baseline byte-for-byte.
@@ -153,6 +154,9 @@ prompt → type command → process → display output → hold → clean → re
 - **Process** — short typed lines or sequential checks represent the operation.
 - **Result** — the output block settles; the cursor parks after it.
 - **Hold** — one long frame (`HOLD_DELAY`) keeps the result readable.
+- **Personality** — one monitor may add a short unexpected line or the terminal
+  character before it clears, so the panels do not all read as the same
+  animation with different strings.
 - **Clean** — rows are erased one per short frame, bottom-up.
 - **Reset** — a brief empty terminal is shown before the loop returns to the
   first frame.
@@ -171,6 +175,22 @@ Timing constants (centiseconds):
 | `CLEAR_DELAY` | 3 | one row erased per frame during clean |
 | `RESET_DELAY` | 16 | brief empty terminal before restart |
 
+### Terminal character
+
+A tiny terminal character—two eyes and a mouth—is drawn from glyphs the font
+already has, as a single row:
+
+```text
+(O_O)      looks
+(-_-)      blinks
+(O_O)      looks again
+```
+
+It is not a logo and does not appear in every monitor. It shows up only after
+the `stack` and `github` results, as a small reward for reading to the end, then
+is cleared with the rest of the terminal. It is decorative and carries no
+information, so it is not part of the accessible text.
+
 ---
 
 ## 5. Monitor specifications
@@ -182,6 +202,10 @@ Timing constants (centiseconds):
 | `projects.gif` | project registry query | infinite | 520 × 170 | `shrpOS :: PROJECT REGISTRY` / `QUERY` |
 | `stack.gif` | platform module diagnostics | infinite | 360 × 160 | `shrpOS :: SYSTEM MODULES` / `DIAG` |
 | `github.gif` | account activity subsystem | infinite | 420 × 150 | `shrpOS :: GITHUB SUBSYSTEM` / `SYNC` |
+| `mikes-stash.gif` | external website gateway | infinite | 520 × 140 | `shrpOS :: EXTERNAL LINK` / `LINK` |
+
+The first five panels describe the internal shrpOS environment. `mikes-stash.gif`
+is different in kind: it is the one panel that points outside (see 5.6).
 
 ### 5.1 `boot.gif` (baseline — unchanged)
 
@@ -203,25 +227,29 @@ ROLE     SOFTWARE DEVELOPER
 SHELL    /BIN/shrp
 NODE     GITHUB.COM/MIKEMEQUIS1
 BUILD    STABLE
+WELCOME BACK
 ```
 
-Values come from the repository only. After the fields settle: hold, clean
-bottom-up, reset. ~5.3 s.
+Values come from the repository only. The terminal recognises its operator
+rather than dumping a database. After the fields settle: hold, clean bottom-up,
+reset. ~5.6 s.
 
 ### 5.3 `projects.gif`
 
 ```text
 > QUERY ASHER
-> SCANNING PROJECT REGISTRY...
+> SEARCHING PROJECT INDEX...
+> FOUND 1 MATCH
 > RESOLVING MODULES...
 ASHER
 STATUS   ACTIVE DEVELOPMENT
 MODULES  CSHARP .NET HARMONY MONO
          FNA LINUX WINDOWS
+LINK ESTABLISHED
 ```
 
-The GIF shows the process of discovering/resolving the project; the README
-carries the authoritative description and links. ~6.1 s.
+The GIF shows the process of searching, matching and resolving the project; the
+README carries the authoritative description and links. ~6.8 s.
 
 ### 5.4 `stack.gif`
 
@@ -234,9 +262,12 @@ MONO ......... OK
 FNA .......... OK
 LINUX ........ OK
 WINDOWS ...... OK
+ALL SYSTEMS NOMINAL
+(O_O)
 ```
 
-Sequential verification; no proficiency levels or ratings. ~5.6 s.
+Sequential verification; no proficiency levels or ratings. Ends with the
+terminal character blinking once. ~6.6 s.
 
 ### 5.5 `github.gif`
 
@@ -246,10 +277,37 @@ REPOSITORIES ....... OK
 ACTIVITY ........... OK
 PROFILE ............ ONLINE
 SYNC COMPLETE
+NO ANOMALIES FOUND
+(O_O)
 ```
 
 Fictional terminal presentation; no live numbers and no claim of a real API
-request. ~4.2 s.
+request. Ends with the terminal character blinking once. ~5.2 s.
+
+### 5.6 `mikes-stash.gif` (external gateway)
+
+```text
+> OPEN WEB_INTERFACE
+LOOKING OUTSIDE...
+CONNECTION ESTABLISHED
+(O_O)
+MIKES STASH
+```
+
+Unlike the five internal monitors, this panel is a gateway rather than a status
+display. The terminal looks outside itself, then names the destination. The
+terminal character appears here *before* the destination resolves, so the panel
+reads as curiosity about the outside rather than a diagnostic.
+
+- The absolute destination is `https://mikesstash.com.br`.
+- The GIF does not link anywhere on its own. The README wraps the image in an
+  `<a href="https://mikesstash.com.br">` anchor; that anchor is the interaction.
+- GIF generation never touches the network: the website can be offline and the
+  asset still generates and renders identically.
+- Branding is written `MIKES STASH` because the bitmap font has no apostrophe
+  and no lowercase `m i k e t a`; the font is not expanded for this.
+
+~5.7 s, ~26 KB.
 
 ---
 
@@ -266,11 +324,13 @@ font module).
 ## 7. Accessibility
 
 GIFs cannot honour `prefers-reduced-motion`, so each monitor carries an
-informative `alt` describing its content and the operation it performs. No
-important fact exists only inside a GIF: the README keeps the authoritative
-description and links for Asher, the full technology list, contact links, live
-GitHub statistics and role/project wording. The README does not repeat the
-monitors' contents as text.
+informative `alt` describing its content and the operation it performs. The
+external gateway's alt text states that the image is a link and where it goes
+(`shrpOS external connection terminal — open Mike's Stash`). No important fact
+exists only inside a GIF: the README keeps the authoritative description and
+links for Asher, the full technology list, contact links, live GitHub statistics
+and role/project wording. The README does not repeat the monitors' contents as
+text.
 
 ---
 
@@ -283,21 +343,29 @@ Three horizontal bands in an HTML `<table>` with `width` attributes on `<img>`
 [ boot.gif 360 ] [ profile.gif 420 ]      row 1
             [ projects.gif 520 ]          row 2 (centered)
 [ stack.gif 360 ] [ github.gif 420 ]      row 3
+
+        [ mikes-stash.gif 520 ]           external gateway, wrapped in <a>
+             ↓ https://mikesstash.com.br
 ```
 
-No JavaScript, no `style=` attributes, no image maps, no external layout
-services. Relative asset paths only.
+The gateway sits after the table, before the human sections, as the transition
+from the fictional interface back to the real site. It is the only website CTA;
+the prose names Mike's Stash but does not repeat the URL.
+
+No JavaScript, no `style=` attributes, no image maps, no iframes, no external
+layout services. Relative asset paths only.
 
 ---
 
 ## 9. Information ownership
 
 Animated (atmosphere / simulated state): boot sequence, identity query,
-project scan, module verification, sync status, cursor activity.
+project scan, module verification, sync status, external gateway, cursor and
+terminal-character activity.
 
 Static and authoritative (readable without animation): Asher description and
-links, contact links, full technology list, live GitHub statistics and streak
-card, role wording, accessibility text.
+links, contact links, the Mike's Stash destination, full technology list, live
+GitHub statistics and streak card, role wording, accessibility text.
 
 Rule: no important fact exists only inside a GIF.
 

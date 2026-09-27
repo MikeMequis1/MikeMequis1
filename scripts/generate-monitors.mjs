@@ -113,6 +113,17 @@ function cleanAndReset(t, lastRow) {
   t.reset(RESET_DELAY);
 }
 
+// A tiny terminal character, drawn only from glyphs the 5x7 font already has.
+// It blinks once, then looks again, so the panel can show something more
+// expressive than status text. Kept to a single row on purpose.
+const MASCOT = ['(O_O)', '(-_-)'];
+function mascot(t, rowIndex, delayCs = PAUSE_DELAY) {
+  const face = (text, d) => t.write(rowIndex, [{ text, x: 6, color: GREEN }], { delayCs: d });
+  face(MASCOT[0], delayCs);
+  face(MASCOT[1], BLINK_DELAY);
+  face(MASCOT[0], delayCs);
+}
+
 // ------------------------------------------------------------ boot definition
 
 const BOOT_W = 360;
@@ -248,7 +259,7 @@ const PROFILE_ROWS = [
   ['BUILD', 'STABLE', DIM, GREEN],
 ];
 
-const PROFILE_LAST_ROW = 7;
+const PROFILE_LAST_ROW = 9;
 
 function buildProfile() {
   const m = new Monitor({
@@ -274,6 +285,11 @@ function buildProfile() {
     fieldRow(t, i + 2, label, value, lc, vc);
   });
 
+  // The terminal recognises its operator on the way out.
+  t.write(PROFILE_LAST_ROW, [{ text: 'WELCOME BACK', x: 6, color: BRIGHT }], {
+    delayCs: PAUSE_DELAY,
+  });
+
   t.hold(HOLD_DELAY);
   cleanAndReset(t, PROFILE_LAST_ROW);
 
@@ -282,7 +298,7 @@ function buildProfile() {
 
 // -------------------------------------------------------- projects definition
 
-const PROJECT_LAST_ROW = 7;
+const PROJECT_LAST_ROW = 10;
 
 function buildProjects() {
   const m = new Monitor({
@@ -295,27 +311,36 @@ function buildProjects() {
   });
   const t = createPanel(m, 'shrpOS :: PROJECT REGISTRY', 'QUERY');
 
-  // Query, scan and resolve read as one operation ending in a result block.
+  // Search, match, resolve: the terminal walks the registry before it answers.
   command(t, 'QUERY ASHER');
-  t.type(1, '> SCANNING PROJECT REGISTRY...', GREEN, {
+  t.type(1, '> SEARCHING PROJECT INDEX...', GREEN, {
     charsPerFrame: 3,
     delayCs: TYPE_DELAY,
     endDelayCs: PAUSE_DELAY,
   });
-  t.type(2, '> RESOLVING MODULES...', GREEN, {
+  t.type(2, '> FOUND 1 MATCH', BRIGHT, {
+    charsPerFrame: 3,
+    delayCs: TYPE_DELAY,
+    endDelayCs: PAUSE_DELAY,
+  });
+  t.type(3, '> RESOLVING MODULES...', GREEN, {
     charsPerFrame: 3,
     delayCs: TYPE_DELAY,
     endDelayCs: PAUSE_DELAY,
   });
   t.hold(PAUSE_DELAY);
 
-  t.write(4, [{ text: 'ASHER', x: 6, color: BRIGHT }], {
-    cursor: t.cursorAfter(4, 'ASHER'),
+  t.write(5, [{ text: 'ASHER', x: 6, color: BRIGHT }], {
+    cursor: t.cursorAfter(5, 'ASHER'),
     delayCs: PAUSE_DELAY,
   });
-  fieldRow(t, 5, 'STATUS', 'ACTIVE DEVELOPMENT', DIM, GREEN);
-  fieldRow(t, 6, 'MODULES', 'CSHARP .NET HARMONY MONO', DIM, GREEN);
-  fieldRow(t, 7, '', 'FNA LINUX WINDOWS', DIM, GREEN);
+  fieldRow(t, 6, 'STATUS', 'ACTIVE DEVELOPMENT', DIM, GREEN);
+  fieldRow(t, 7, 'MODULES', 'CSHARP .NET HARMONY MONO', DIM, GREEN);
+  fieldRow(t, 8, '', 'FNA LINUX WINDOWS', DIM, GREEN);
+
+  t.write(10, [{ text: 'LINK ESTABLISHED', x: 6, color: BRIGHT }], {
+    delayCs: PAUSE_DELAY,
+  });
 
   t.hold(HOLD_DELAY);
   cleanAndReset(t, PROJECT_LAST_ROW);
@@ -368,8 +393,14 @@ function buildStack() {
     });
   });
 
+  // All clear, and the terminal is quietly pleased about it.
+  t.write(9, [{ text: 'ALL SYSTEMS NOMINAL', x: 6, color: BRIGHT }], {
+    delayCs: PAUSE_DELAY,
+  });
+  mascot(t, 10);
+
   t.hold(HOLD_DELAY);
-  cleanAndReset(t, STACK_MODULES.length + 1);
+  cleanAndReset(t, 10);
 
   return m;
 }
@@ -383,7 +414,7 @@ const GITHUB_ROWS = [
 ];
 const GITHUB_COLS = 30; // char cells from column 0 to the marker
 
-const GITHUB_LAST_ROW = 6;
+const GITHUB_LAST_ROW = 9;
 
 function buildGithub() {
   const m = new Monitor({
@@ -415,13 +446,64 @@ function buildGithub() {
     });
   });
 
-  t.write(GITHUB_LAST_ROW, [{ text: 'SYNC COMPLETE', x: 6, color: BRIGHT }], {
-    cursor: t.cursorAfter(GITHUB_LAST_ROW, 'SYNC COMPLETE'),
+  t.write(6, [{ text: 'SYNC COMPLETE', x: 6, color: BRIGHT }], {
+    cursor: t.cursorAfter(6, 'SYNC COMPLETE'),
+    delayCs: PAUSE_DELAY,
+  });
+  t.write(7, [{ text: 'NO ANOMALIES FOUND', x: 6, color: GREEN }], {
     delayCs: PAUSE_DELAY,
   });
 
+  // Everything matched; the terminal takes a satisfied look around.
+  mascot(t, 9);
+
   t.hold(HOLD_DELAY);
   cleanAndReset(t, GITHUB_LAST_ROW);
+
+  return m;
+}
+
+// ----------------------------------------------------- external link definition
+
+// Not an internal shrpOS subsystem. This panel points outward: the terminal
+// looks outside itself and offers the exit to the real website. The README
+// wraps it in an <a>; the GIF only presents the gateway. The terminal character
+// appears here before the destination resolves, so the panel reads as curiosity
+// about the outside rather than another diagnostic.
+const STASH_LAST_ROW = 8;
+
+function buildStash() {
+  const m = new Monitor({
+    width: 520,
+    height: 140,
+    palette: PALETTE,
+    background: BG,
+    transparent: TRANSPARENT,
+    loop: 0,
+  });
+  const t = createPanel(m, 'shrpOS :: EXTERNAL LINK', 'LINK');
+
+  command(t, 'OPEN WEB_INTERFACE');
+  t.type(2, 'LOOKING OUTSIDE...', DIM, {
+    charsPerFrame: 3,
+    delayCs: TYPE_DELAY,
+    endDelayCs: PAUSE_DELAY,
+  });
+  t.hold(PAUSE_DELAY);
+
+  t.write(4, [{ text: 'CONNECTION ESTABLISHED', x: 6, color: GREEN }], {
+    delayCs: PAUSE_DELAY,
+  });
+
+  // The terminal peers outward before the destination resolves.
+  mascot(t, 6);
+
+  t.write(STASH_LAST_ROW, [{ text: 'MIKES STASH', x: 6, color: BRIGHT }], {
+    cursor: t.cursorAfter(STASH_LAST_ROW, 'MIKES STASH'),
+    delayCs: HOLD_DELAY,
+  });
+
+  cleanAndReset(t, STASH_LAST_ROW);
 
   return m;
 }
@@ -434,6 +516,7 @@ const monitors = {
   'projects.gif': buildProjects(),
   'stack.gif': buildStack(),
   'github.gif': buildGithub(),
+  'mikes-stash.gif': buildStash(),
 };
 
 for (const [name, monitor] of Object.entries(monitors)) {

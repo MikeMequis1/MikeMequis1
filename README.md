@@ -1,4 +1,4 @@
-<p align="center"><strong>shrpOS</strong> — an original fictional terminal interface.</p>
+<p align="center"><strong>shrpOS</strong> — a small, original fictional terminal with a mind of its own.</p>
 
 <div align="center">
 <table>
@@ -16,29 +16,42 @@
 </table>
 </div>
 
-The panels above are animated shrpOS terminal fragments — ordinary little sessions that type a command, process it, print a result and clear. The rest of this page is the human-readable layer: who the profile belongs to, what is being built, and where to find it.
+<p align="center">
+  <a href="https://mikesstash.com.br">
+    <img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="520">
+  </a>
+</p>
+
+The panels above are animated shrpOS terminal fragments — a few small, slightly odd sessions that type a command, poke around, print a result, blink at you and clear themselves away. The last one is the way out: click it to leave the fictional terminal and open **Mike's Stash**. shrpOS is not pretending to be an operating system; it is a tiny terminal personality that lives on this profile. Everything below is the human-readable layer.
 
 ## About
 
-**Marcelo** — software developer building desktop tooling and modding infrastructure, mostly in C# / .NET.
+I'm **Marcelo**, a software developer interested in building tools, runtime systems, and strange little projects that sit somewhere between application development and games.
 
-- Mode: build · break · learn · repeat
-- GitHub: [github.com/MikeMequis1](https://github.com/MikeMequis1)
+Most of my current work revolves around C# / .NET, game modding, Linux, and experimenting with AI-assisted development workflows. Find me on GitHub at [github.com/MikeMequis1](https://github.com/MikeMequis1).
 
-Currently working on and exploring:
+### Currently exploring
 
-- **Asher** — a modding platform for *Dust: An Elysian Tail*.
-- Cross-platform support for Linux and Windows.
-- Modding runtimes and detours — Harmony, Mono, FNA.
-- AI / LLM assisted development workflows.
+- C# / .NET for desktop tooling and game-adjacent software
+- Modding runtimes and detours — Harmony, Mono and FNA
+- Linux as both a development environment and a target platform
+- AI-assisted development and agent-based workflows
 
 ## Asher
 
-**Asher** is a modding platform for *Dust: An Elysian Tail*, in active development.
+**Asher** is a modding platform for *Dust: An Elysian Tail*, focused on making runtime patches and mods easier to develop, distribute and use.
 
-Built on C# · .NET · Harmony · Mono · FNA, targeting Linux and Windows.
+It spans C# / .NET, Harmony, Mono / FNA, and cross-platform experimentation between Windows and Linux, and it is still in active development.
 
 The repository and documentation links will be published here once the project is public. Until then, public repositories are listed at [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories).
+
+## Things I like building
+
+- Developer tooling
+- Modding infrastructure
+- Runtime experiments
+- Cross-platform desktop software
+- Small tools that make complicated workflows a little less annoying
 
 ## Technology
 
