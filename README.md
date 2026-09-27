@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: startup sequence reaching SYSTEM READY and a greeting" width="360">
-  <img src="./assets/monitors/profile.gif" alt="shrpOS operator monitor: a WHOAMI session showing Marcelo, software developer, working in C#, .NET, FNA on Linux and Windows, with GitHub online" width="420">
+  <img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: startup sequence reaching SYSTEM READY and a greeting" width="277">
+  <img src="./assets/monitors/profile.gif" alt="shrpOS operator monitor: a WHOAMI session showing Marcelo, software developer, working in C#, .NET, FNA on Linux and Windows, with GitHub online" width="323">
 </p>
 
 <p align="center">
   <img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="400">
-  <a href="https://mikesstash.com.br"><img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="400"></a>
+  <a href="https://mikesstash.com.br"><img src="./assets/monitors/mikesstash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="400"></a>
 </p>
 
 ## About

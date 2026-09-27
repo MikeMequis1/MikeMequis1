@@ -125,7 +125,7 @@ function wink(t, rowIndex) {
 // ------------------------------------------------------------ boot definition
 
 const BOOT_W = 360;
-const BOOT_H = 160;
+const BOOT_H = 170; // all four monitors share this height for row alignment
 
 const LINES = [
   '> INITIALIZING KERNEL...',
@@ -280,7 +280,7 @@ const PROFILE_LAST_ROW = PROFILE_WINK_ROW;
 function buildProfile() {
   const m = new Monitor({
     width: 420,
-    height: 160, // matches boot height so the README row aligns edge to edge
+    height: 170, // all four monitors share this height for row alignment
     palette: PALETTE,
     background: BG,
     transparent: TRANSPARENT,
@@ -420,7 +420,9 @@ const monitors = {
   'boot.gif': buildBoot(),
   'profile.gif': buildProfile(),
   'projects.gif': buildProjects(),
-  'mikes-stash.gif': buildStash(),
+  // Renamed from mikes-stash.gif to bust GitHub's image-proxy cache after the
+  // call-to-action was added.
+  'mikesstash.gif': buildStash(),
 };
 
 for (const [name, monitor] of Object.entries(monitors)) {

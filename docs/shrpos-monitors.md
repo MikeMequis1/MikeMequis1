@@ -37,13 +37,15 @@ JavaScript, CSS that GitHub strips, one giant composited GIF.
 
 | Monitor | Role | Size | Header / tag |
 | --- | --- | --- | --- |
-| `boot.gif` | system startup | 360 × 160 | `shrpOS BIOS v1.0` / `POST` |
-| `profile.gif` | operator identity and environment | 420 × 160 | `shrpOS :: OPERATOR` / `v1.1` |
+| `boot.gif` | system startup | 360 × 170 | `shrpOS BIOS v1.0` / `POST` |
+| `profile.gif` | operator identity and environment | 420 × 170 | `shrpOS :: OPERATOR` / `v1.1` |
 | `projects.gif` | projects, Asher first | 520 × 170 | `shrpOS :: PROJECT REGISTRY` / `QUERY` |
-| `mikes-stash.gif` | external website gateway | 520 × 170 | `shrpOS :: EXTERNAL LINK` / `LINK` |
+| `mikesstash.gif` | external website gateway | 520 × 170 | `shrpOS :: EXTERNAL LINK` / `LINK` |
 
-Sizes are chosen so the two panels in each README row share a height: boot and
-profile are both 160 px tall, projects and mikes-stash are both 170 px tall.
+All four monitors share the same canvas height (170 px). Widths differ because
+the panels hold different content; the README then displays them at widths
+scaled by the same factor, so every panel renders at the same height and all
+four edges line up.
 
 Each monitor answers a different question:
 
@@ -147,7 +149,7 @@ Palette (shared):
 | 7 | — | reserved | unused |
 
 The accent colour appears in exactly one place: the
-`>> CLICK TO ACCESS CONNECTION <<` line in `mikes-stash.gif`. Every other
+`>> CLICK TO ACCESS CONNECTION <<` line in `mikesstash.gif`. Every other
 monitor uses only indices 0–5, so the rest of the system stays green.
 
 ### Glyph coverage
@@ -246,7 +248,7 @@ Projects, Asher first. `> QUERY ASHER`, a short search line, then `ASHER`,
 technology list — that belongs to `profile`. The README carries the
 authoritative description and links.
 
-### `mikes-stash.gif`
+### `mikesstash.gif`
 
 The external gateway and the only panel that points outside shrpOS.
 `> OPEN WEB_INTERFACE`, `LOOKING OUTSIDE...`, then `MIKES STASH` and
@@ -294,16 +296,16 @@ two inline `<img>` elements separated by a space, so GitHub renders two panels
 side by side and wraps them only on narrow/mobile widths:
 
 ```text
-<p align="center">  boot.gif (360)  profile.gif (420)  </p>
-<p align="center">  projects.gif (400)  <a>mikes-stash.gif (400)</a>  </p>
+<p align="center">  boot.gif (277)  profile.gif (323)  </p>
+<p align="center">  projects.gif (400)  <a>mikesstash.gif (400)</a>  </p>
 ```
 
-Because each row's two monitors share a canvas height (160 for row 1, 170 for
-row 2), displaying them with `width` only — natural height from the aspect
-ratio — gives aligned top and bottom edges. Row 1 uses native widths (360 + 420
-= 780); row 2 uses 400 each (520 + 520 native scaled to 400 + 400 = 800) so the
-row fits the README column. No `height` attribute is set, so nothing is
-stretched.
+Because all four canvases are 170 px tall, displaying them with `width` only —
+natural height from the aspect ratio — gives the same rendered height for every
+panel, so tops and bottoms line up across both rows. The widths are the native
+widths scaled by one common factor (≈0.77): 360→277, 420→323, 520→400, keeping
+row totals inside the README column (600 and 800). No `height` attribute is set,
+so nothing is stretched.
 
 The gateway is the only website CTA; it is the only monitor wrapped in an
 anchor. No JavaScript, no `style=` attributes, no tables, no image maps, no
