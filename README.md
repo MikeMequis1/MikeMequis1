@@ -1,21 +1,13 @@
-<div align="center">
-<table>
-  <tr>
-    <td align="center"><img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: startup sequence reaching SYSTEM READY and a greeting" width="360"></td>
+<div>
+    <td align="center"><img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: startup sequence reaching SYSTEM READY and a greeting" width="420"></td>
     <td align="center"><img src="./assets/monitors/profile.gif" alt="shrpOS operator monitor: a WHOAMI session showing Marcelo, software developer, working in C#, .NET, FNA on Linux and Windows, with GitHub online" width="420"></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="520"></td>
-    <td align="center"><a href="https://mikesstash.com.br"><img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="520"></a></td>
-  </tr>
-</table>
+    <td align="center"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="420"></td>
+    <td align="center"><a href="https://mikesstash.com.br"><img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="420"></a></td>
 </div>
 
 ## About
 
 I'm **Marcelo**, a software developer interested in building tools, runtime systems, and strange little projects that sit somewhere between application development and games.
-
-Most of my current work revolves around C# / .NET, game modding, Linux, and experimenting with AI-assisted development workflows. Find me on GitHub at [github.com/MikeMequis1](https://github.com/MikeMequis1).
 
 ### Currently exploring
 
@@ -44,14 +36,7 @@ Most of my current work revolves around C# / .NET, game modding, Linux, and expe
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=OS&message=Windows&color=00ff41&logo=windows&logoColor=000000" alt="Platform: Windows">
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=VCS&message=Git&color=00ff41&logo=git&logoColor=000000" alt="Version control: Git">
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=HOST&message=GitHub&color=00ff41&logo=github&logoColor=000000" alt="Host: GitHub">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=TOOL&message=AI%20%2F%20LLM&color=00ff41" alt="Tooling: AI / LLM">
 </p>
-
-## Links
-
-- GitHub profile — [github.com/MikeMequis1](https://github.com/MikeMequis1)
-- Repositories — [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories)
-- Issues / contact — [github.com/MikeMequis1/MikeMequis1/issues](https://github.com/MikeMequis1/MikeMequis1/issues)
 
 ## GitHub activity
 
