@@ -31,7 +31,7 @@ const PALETTE = [
   [31, 143, 63], // 3 DIM
   [0, 255, 65], // 4 GREEN
   [170, 255, 192], // 5 BRIGHT
-  [5, 8, 5],
+  [255, 176, 0], // 6 ACCENT (amber; external-link call to action only)
   [5, 8, 5],
 ];
 const TRANSPARENT = 0;
@@ -40,6 +40,8 @@ const BAR = 2;
 const DIM = 3;
 const GREEN = 4;
 const BRIGHT = 5;
+const ACCENT = 6; // interactive accent: used only by mikes-stash
+const CYAN = 6; // interactive accent, used only by mikes-stash
 
 // ------------------------------------------------------- shared timing/grid
 
@@ -111,13 +113,13 @@ function cleanAndReset(t, lastRow) {
 // so the closed eye reads. Boot uses the same characters and delays inline.
 const FACE_LOOK = '0_0';
 const FACE_WINK = '0_<';
-const FACE_LOOK_DELAY = 45; // noticeable hold before the wink
-const WINK_DELAY = 14; // the wink itself is brief
-const FACE_BACK_DELAY = 22; // then settle back to normal
+const WINK_LOOK_DELAY = 40; // 0_0 before the wink: a noticeable beat
+const WINK_CLOSED_DELAY = 12; // 0_< the wink itself is brief
+const WINK_FINAL_DELAY = 45; // 0_0 after the wink, held before clearing
 function wink(t, rowIndex) {
-  t.write(rowIndex, [{ text: FACE_LOOK, x: 6, color: GREEN }], { delayCs: FACE_LOOK_DELAY });
-  t.write(rowIndex, [{ text: FACE_WINK, x: 6, color: GREEN }], { delayCs: WINK_DELAY });
-  t.write(rowIndex, [{ text: FACE_LOOK, x: 6, color: GREEN }], { delayCs: FACE_BACK_DELAY });
+  t.write(rowIndex, [{ text: FACE_LOOK, x: 6, color: GREEN }], { delayCs: WINK_LOOK_DELAY });
+  t.write(rowIndex, [{ text: FACE_WINK, x: 6, color: GREEN }], { delayCs: WINK_CLOSED_DELAY });
+  t.write(rowIndex, [{ text: FACE_LOOK, x: 6, color: GREEN }], { delayCs: WINK_FINAL_DELAY });
 }
 
 // ------------------------------------------------------------ boot definition
@@ -247,9 +249,9 @@ function buildBoot() {
     m.drawText(px, text, 6, BOOT_FACE_Y, GREEN);
     m.push(px, delayCs);
   };
-  face(FACE_LOOK, FACE_LOOK_DELAY);
-  face(FACE_WINK, WINK_DELAY);
-  face(FACE_LOOK, FACE_BACK_DELAY);
+  face(FACE_LOOK, WINK_LOOK_DELAY);
+  face(FACE_WINK, WINK_CLOSED_DELAY);
+  face(FACE_LOOK, WINK_FINAL_DELAY);
 
   // Boot now loops: wipe every content row bottom-up, show a brief empty state,
   // then restart from the chrome-only base frame.
@@ -278,7 +280,7 @@ const PROFILE_LAST_ROW = PROFILE_WINK_ROW;
 function buildProfile() {
   const m = new Monitor({
     width: 420,
-    height: 150,
+    height: 160, // matches boot height so the README row aligns edge to edge
     palette: PALETTE,
     background: BG,
     transparent: TRANSPARENT,
@@ -363,17 +365,19 @@ function buildProjects() {
 // ----------------------------------------------------- external link definition
 
 // Not an internal shrpOS subsystem. This panel points outward: the terminal
-// looks outside itself and names the exit to the real website. The README wraps
-// it in an <a>; the GIF only presents the gateway, in the same terminal style
-// but with its own "looking outside" beat.
+// looks outside itself, names the exit to the real website, and then explicitly
+// invites a click. The ACCENT colour appears only on that call to action so it
+// reads as interactive; the rest of the panel stays green. The README wraps the
+// GIF in an <a>; the GIF only presents the gateway.
 const STASH_NAME_ROW = 4;
-const STASH_WINK_ROW = 8;
+const STASH_CTA_ROW = 7;
+const STASH_WINK_ROW = 9;
 const STASH_LAST_ROW = STASH_WINK_ROW;
 
 function buildStash() {
   const m = new Monitor({
     width: 520,
-    height: 140,
+    height: 170, // matches projects so the README row aligns edge to edge
     palette: PALETTE,
     background: BG,
     transparent: TRANSPARENT,
@@ -394,6 +398,11 @@ function buildStash() {
     delayCs: PAUSE_DELAY,
   });
   t.write(5, [{ text: 'CONNECTION ESTABLISHED', x: 6, color: GREEN }], {
+    delayCs: PAUSE_DELAY,
+  });
+
+  // The only accent-coloured line in any monitor: an explicit invitation.
+  t.write(STASH_CTA_ROW, [{ text: '>> CLICK TO ACCESS CONNECTION <<', x: 6, color: ACCENT }], {
     delayCs: PAUSE_DELAY,
   });
 

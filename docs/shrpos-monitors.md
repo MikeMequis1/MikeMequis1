@@ -38,9 +38,12 @@ JavaScript, CSS that GitHub strips, one giant composited GIF.
 | Monitor | Role | Size | Header / tag |
 | --- | --- | --- | --- |
 | `boot.gif` | system startup | 360 × 160 | `shrpOS BIOS v1.0` / `POST` |
-| `profile.gif` | operator identity and environment | 420 × 150 | `shrpOS :: OPERATOR` / `v1.1` |
+| `profile.gif` | operator identity and environment | 420 × 160 | `shrpOS :: OPERATOR` / `v1.1` |
 | `projects.gif` | projects, Asher first | 520 × 170 | `shrpOS :: PROJECT REGISTRY` / `QUERY` |
-| `mikes-stash.gif` | external website gateway | 520 × 140 | `shrpOS :: EXTERNAL LINK` / `LINK` |
+| `mikes-stash.gif` | external website gateway | 520 × 170 | `shrpOS :: EXTERNAL LINK` / `LINK` |
+
+Sizes are chosen so the two panels in each README row share a height: boot and
+profile are both 160 px tall, projects and mikes-stash are both 170 px tall.
 
 Each monitor answers a different question:
 
@@ -120,7 +123,7 @@ All four displays read as panels of the same machine.
 | --- | --- |
 | Font | Local 5x7 bitmap font (`monitor-font.mjs`). Uppercase/digits for labels and values; no external font. |
 | Scale | `scale = 1` for all monitors. |
-| Palette | 8-entry indexed palette (below). Indices 0–5 used; 6–7 reserved. |
+| Palette | 8-entry indexed palette (below). Indices 0–5 and 6 (accent) used; 7 reserved. |
 | Background | Index 1 `#050805`, identical across monitors. |
 | Border | 1px `strokeRect` inset at (1,1), colour DIM `#1f8f3f`. |
 | Header bar | 13px `BAR` `#0c2e1a` strip with a 1px DIM divider. Left = monitor label (GREEN), right = tag (DIM). |
@@ -140,8 +143,12 @@ Palette (shared):
 | 3 | DIM | `#1f8f3f` | border, tags, metadata, prompt |
 | 4 | GREEN | `#00ff41` | labels, values, commands, cursor, character |
 | 5 | BRIGHT | `#aaffc0` | primary values, names |
-| 6 | — | reserved | unused |
+| 6 | ACCENT | `#ffb000` | interactive accent; the mikes-stash call to action only |
 | 7 | — | reserved | unused |
+
+The accent colour appears in exactly one place: the
+`>> CLICK TO ACCESS CONNECTION <<` line in `mikes-stash.gif`. Every other
+monitor uses only indices 0–5, so the rest of the system stays green.
 
 ### Glyph coverage
 
@@ -190,9 +197,9 @@ Timing constants (centiseconds):
 | `HOLD_DELAY` | 200 | final readable hold |
 | `CLEAR_DELAY` | 3 | one row erased per frame during clean |
 | `RESET_DELAY` | 16 | brief empty terminal before restart |
-| `FACE_LOOK_DELAY` | 45 | character looks, noticeable hold |
-| `WINK_DELAY` | 14 | the wink itself (brief) |
-| `FACE_BACK_DELAY` | 22 | character returns to normal |
+| `WINK_LOOK_DELAY` | 40 | `0_0` before the wink: a noticeable beat |
+| `WINK_CLOSED_DELAY` | 12 | `0_<` the wink itself (brief) |
+| `WINK_FINAL_DELAY` | 45 | `0_0` after the wink, held before clearing |
 
 ### 5.1 Terminal character (the wink)
 
@@ -200,16 +207,18 @@ Every monitor ends with the same signature, after the final result has been
 held. The character is a single row, drawn from glyphs the font already has:
 
 ```text
-0_0   looks, held for a beat
-0_<   winks one eye, briefly
-0_0   looks again, briefly
+0_0   looks, held for a noticeable beat
+0_<   winks one eye (brief)
+0_0   looks again, held before the clear
 ```
 
 `0` renders with a diagonal and `O` without, so the closed eye reads visually.
 The character is not a status indicator and is never appended to a line of
 output; it occupies its own row. It is decorative, carries no information and is
-not part of the accessible text — it is the personality of the machine. After
-the third frame the terminal cleans itself.
+not part of the accessible text — it is the personality of the machine. The
+final `0_0` is held longer than the wink (`WINK_FINAL_DELAY` > `WINK_CLOSED_DELAY`)
+so the viewer sees the character return before the terminal cleans itself. Boot
+uses the same frames and delays, drawn inline because it is a bespoke builder.
 
 ---
 
@@ -241,7 +250,10 @@ authoritative description and links.
 
 The external gateway and the only panel that points outside shrpOS.
 `> OPEN WEB_INTERFACE`, `LOOKING OUTSIDE...`, then `MIKES STASH` and
-`CONNECTION ESTABLISHED`.
+`CONNECTION ESTABLISHED`, then the call to action
+`>> CLICK TO ACCESS CONNECTION <<`. That line is the only use of the accent
+colour (index 6, amber) in the whole system; everything else stays green, so the
+invitation reads as interactive.
 
 - The absolute destination is `https://mikesstash.com.br`.
 - The GIF does not link anywhere on its own. The README wraps the image in an
@@ -277,17 +289,24 @@ monitors' contents as text, and does not explain the character.
 
 ## 9. README layout
 
-A 2 × 2 HTML `<table>` with `width` attributes on `<img>` (GitHub keeps
-`align`/`width`, strips `style`):
+A 2 × 2 arrangement with no tables and no CSS. Two centred paragraphs each hold
+two inline `<img>` elements separated by a space, so GitHub renders two panels
+side by side and wraps them only on narrow/mobile widths:
 
 ```text
-[ boot.gif 360 ] [ profile.gif 420 ]      row 1
-[ projects.gif 520 ] [ mikes-stash.gif 520 ]  row 2, gateway wrapped in <a>
-                            ↓ https://mikesstash.com.br
+<p align="center">  boot.gif (360)  profile.gif (420)  </p>
+<p align="center">  projects.gif (400)  <a>mikes-stash.gif (400)</a>  </p>
 ```
 
-The gateway is the only website CTA; the prose names Mike's Stash but does not
-repeat the URL. No JavaScript, no `style=` attributes, no image maps, no
+Because each row's two monitors share a canvas height (160 for row 1, 170 for
+row 2), displaying them with `width` only — natural height from the aspect
+ratio — gives aligned top and bottom edges. Row 1 uses native widths (360 + 420
+= 780); row 2 uses 400 each (520 + 520 native scaled to 400 + 400 = 800) so the
+row fits the README column. No `height` attribute is set, so nothing is
+stretched.
+
+The gateway is the only website CTA; it is the only monitor wrapped in an
+anchor. No JavaScript, no `style=` attributes, no tables, no image maps, no
 iframes, no external layout services. Relative asset paths only.
 
 ---
