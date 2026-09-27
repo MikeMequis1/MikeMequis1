@@ -113,15 +113,15 @@ function cleanAndReset(t, lastRow) {
   t.reset(RESET_DELAY);
 }
 
-// A tiny terminal character, drawn only from glyphs the 5x7 font already has.
-// It blinks once, then looks again, so the panel can show something more
-// expressive than status text. Kept to a single row on purpose.
-const MASCOT = ['(O_O)', '(-_-)'];
-function mascot(t, rowIndex, delayCs = PAUSE_DELAY) {
-  const face = (text, d) => t.write(rowIndex, [{ text, x: 6, color: GREEN }], { delayCs: d });
-  face(MASCOT[0], delayCs);
-  face(MASCOT[1], BLINK_DELAY);
-  face(MASCOT[0], delayCs);
+// The shared shrpOS signature: the terminal character looks at the visitor,
+// winks one eye, then returns to normal before the panel cleans itself. Drawn
+// only from glyphs the 5x7 font already has. Not information, just personality.
+const WINK_FRAMES = ['O_O', '0_<', 'O_O'];
+const WINK_DELAY = 18;
+function wink(t, rowIndex, delayCs = WINK_DELAY) {
+  for (const text of WINK_FRAMES) {
+    t.write(rowIndex, [{ text, x: 6, color: GREEN }], { delayCs });
+  }
 }
 
 // ------------------------------------------------------------ boot definition
@@ -132,12 +132,11 @@ const BOOT_H = 160;
 const LINES = [
   '> INITIALIZING KERNEL...',
   '> LOADING USER PROFILE...',
-  '> MOUNTING DEVELOPMENT DATABASE...',
-  '> CONNECTING TO GITHUB...',
-  '> LOADING PROJECT REGISTRY...',
+  '> STARTING SESSION...',
 ];
 const READY = 'SYSTEM READY';
 const WELCOME = 'WELCOME, MARCELO.';
+const BOOT_FACE_Y = 136; // below WELCOME (y = 118)
 
 function buildBoot() {
   const W = BOOT_W;
@@ -244,22 +243,32 @@ function buildBoot() {
   state.cursorOn = true;
   m.push(renderFrame(), HOLD_DELAY);
 
+  // Boot is one-shot, so it ends on the wink rather than clearing. The face row
+  // is erased to background each frame before drawing, so the wink does not
+  // smear the previous glyphs together under disposal-keep.
+  for (const text of WINK_FRAMES) {
+    const px = m.newCanvas();
+    m.fillRect(px, 6, BOOT_FACE_Y, W - 12, 8, BG);
+    m.drawText(px, text, 6, BOOT_FACE_Y, GREEN);
+    m.push(px, WINK_DELAY);
+  }
+
   return m;
 }
 
 // --------------------------------------------------------- profile definition
 
-// Identity/status panel. Values come from the repository only.
+// Identity panel. Values come from the repository only; only what identifies
+// the operator is kept.
 const PROFILE_ROWS = [
   ['USER', 'MARCELO', DIM, BRIGHT],
-  ['STATUS', 'ONLINE', DIM, GREEN],
   ['ROLE', 'SOFTWARE DEVELOPER', DIM, BRIGHT],
   ['SHELL', '/BIN/shrp', DIM, GREEN],
   ['NODE', 'GITHUB.COM/MIKEMEQUIS1', DIM, GREEN],
-  ['BUILD', 'STABLE', DIM, GREEN],
 ];
-
-const PROFILE_LAST_ROW = 9;
+const PROFILE_WELCOME_ROW = 7;
+const PROFILE_WINK_ROW = 9;
+const PROFILE_LAST_ROW = PROFILE_WINK_ROW;
 
 function buildProfile() {
   const m = new Monitor({
@@ -285,12 +294,13 @@ function buildProfile() {
     fieldRow(t, i + 2, label, value, lc, vc);
   });
 
-  // The terminal recognises its operator on the way out.
-  t.write(PROFILE_LAST_ROW, [{ text: 'WELCOME BACK', x: 6, color: BRIGHT }], {
+  // The terminal recognises its operator on the way out, then winks.
+  t.write(PROFILE_WELCOME_ROW, [{ text: 'WELCOME BACK', x: 6, color: BRIGHT }], {
     delayCs: PAUSE_DELAY,
   });
-
   t.hold(HOLD_DELAY);
+  wink(t, PROFILE_WINK_ROW);
+
   cleanAndReset(t, PROFILE_LAST_ROW);
 
   return m;
@@ -298,7 +308,8 @@ function buildProfile() {
 
 // -------------------------------------------------------- projects definition
 
-const PROJECT_LAST_ROW = 10;
+const PROJECT_WINK_ROW = 10;
+const PROJECT_LAST_ROW = PROJECT_WINK_ROW;
 
 function buildProjects() {
   const m = new Monitor({
@@ -311,38 +322,32 @@ function buildProjects() {
   });
   const t = createPanel(m, 'shrpOS :: PROJECT REGISTRY', 'QUERY');
 
-  // Search, match, resolve: the terminal walks the registry before it answers.
+  // Search, find, answer. One process line, one result block.
   command(t, 'QUERY ASHER');
-  t.type(1, '> SEARCHING PROJECT INDEX...', GREEN, {
-    charsPerFrame: 3,
-    delayCs: TYPE_DELAY,
-    endDelayCs: PAUSE_DELAY,
-  });
-  t.type(2, '> FOUND 1 MATCH', BRIGHT, {
-    charsPerFrame: 3,
-    delayCs: TYPE_DELAY,
-    endDelayCs: PAUSE_DELAY,
-  });
-  t.type(3, '> RESOLVING MODULES...', GREEN, {
+  t.type(2, '> SEARCHING PROJECT INDEX...', GREEN, {
     charsPerFrame: 3,
     delayCs: TYPE_DELAY,
     endDelayCs: PAUSE_DELAY,
   });
   t.hold(PAUSE_DELAY);
 
-  t.write(5, [{ text: 'ASHER', x: 6, color: BRIGHT }], {
-    cursor: t.cursorAfter(5, 'ASHER'),
+  t.write(4, [{ text: 'ASHER', x: 6, color: BRIGHT }], {
+    cursor: t.cursorAfter(4, 'ASHER'),
     delayCs: PAUSE_DELAY,
   });
-  fieldRow(t, 6, 'STATUS', 'ACTIVE DEVELOPMENT', DIM, GREEN);
-  fieldRow(t, 7, 'MODULES', 'CSHARP .NET HARMONY MONO', DIM, GREEN);
-  fieldRow(t, 8, '', 'FNA LINUX WINDOWS', DIM, GREEN);
-
-  t.write(10, [{ text: 'LINK ESTABLISHED', x: 6, color: BRIGHT }], {
+  t.write(5, [{ text: 'ACTIVE DEVELOPMENT', x: 6, color: GREEN }], {
+    delayCs: PAUSE_DELAY,
+  });
+  t.write(7, [{ text: 'CSHARP .NET HARMONY MONO', x: 6, color: GREEN }], {
+    delayCs: PAUSE_DELAY,
+  });
+  t.write(8, [{ text: 'FNA LINUX WINDOWS', x: 6, color: GREEN }], {
     delayCs: PAUSE_DELAY,
   });
 
   t.hold(HOLD_DELAY);
+  wink(t, PROJECT_WINK_ROW);
+
   cleanAndReset(t, PROJECT_LAST_ROW);
 
   return m;
@@ -394,12 +399,13 @@ function buildStack() {
   });
 
   // All clear, and the terminal is quietly pleased about it.
-  t.write(9, [{ text: 'ALL SYSTEMS NOMINAL', x: 6, color: BRIGHT }], {
+  t.write(9, [{ text: 'STACK READY', x: 6, color: BRIGHT }], {
     delayCs: PAUSE_DELAY,
   });
-  mascot(t, 10);
 
   t.hold(HOLD_DELAY);
+  wink(t, 10);
+
   cleanAndReset(t, 10);
 
   return m;
@@ -414,7 +420,8 @@ const GITHUB_ROWS = [
 ];
 const GITHUB_COLS = 30; // char cells from column 0 to the marker
 
-const GITHUB_LAST_ROW = 9;
+const GITHUB_WINK_ROW = 8;
+const GITHUB_LAST_ROW = GITHUB_WINK_ROW;
 
 function buildGithub() {
   const m = new Monitor({
@@ -450,14 +457,10 @@ function buildGithub() {
     cursor: t.cursorAfter(6, 'SYNC COMPLETE'),
     delayCs: PAUSE_DELAY,
   });
-  t.write(7, [{ text: 'NO ANOMALIES FOUND', x: 6, color: GREEN }], {
-    delayCs: PAUSE_DELAY,
-  });
-
-  // Everything matched; the terminal takes a satisfied look around.
-  mascot(t, 9);
 
   t.hold(HOLD_DELAY);
+  wink(t, GITHUB_WINK_ROW);
+
   cleanAndReset(t, GITHUB_LAST_ROW);
 
   return m;
@@ -466,11 +469,12 @@ function buildGithub() {
 // ----------------------------------------------------- external link definition
 
 // Not an internal shrpOS subsystem. This panel points outward: the terminal
-// looks outside itself and offers the exit to the real website. The README
-// wraps it in an <a>; the GIF only presents the gateway. The terminal character
-// appears here before the destination resolves, so the panel reads as curiosity
-// about the outside rather than another diagnostic.
-const STASH_LAST_ROW = 8;
+// looks outside itself and names the exit to the real website. The README wraps
+// it in an <a>; the GIF only presents the gateway. The destination is the final
+// meaningful result, then the shared wink.
+const STASH_NAME_ROW = 6;
+const STASH_WINK_ROW = 8;
+const STASH_LAST_ROW = STASH_WINK_ROW;
 
 function buildStash() {
   const m = new Monitor({
@@ -494,14 +498,13 @@ function buildStash() {
   t.write(4, [{ text: 'CONNECTION ESTABLISHED', x: 6, color: GREEN }], {
     delayCs: PAUSE_DELAY,
   });
-
-  // The terminal peers outward before the destination resolves.
-  mascot(t, 6);
-
-  t.write(STASH_LAST_ROW, [{ text: 'MIKES STASH', x: 6, color: BRIGHT }], {
-    cursor: t.cursorAfter(STASH_LAST_ROW, 'MIKES STASH'),
-    delayCs: HOLD_DELAY,
+  t.write(STASH_NAME_ROW, [{ text: 'MIKES STASH', x: 6, color: BRIGHT }], {
+    cursor: t.cursorAfter(STASH_NAME_ROW, 'MIKES STASH'),
+    delayCs: PAUSE_DELAY,
   });
+
+  t.hold(HOLD_DELAY);
+  wink(t, STASH_WINK_ROW);
 
   cleanAndReset(t, STASH_LAST_ROW);
 

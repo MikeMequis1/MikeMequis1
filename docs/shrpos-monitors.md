@@ -85,7 +85,7 @@ timeline without re-implementing frame bookkeeping.
 - `fieldRow(t, row, label, value, labelColor, valueColor)` — reveals one
   label/value row with the cursor after the value.
 - `cleanAndReset(t, lastRow)` — the shared clean → reset tail.
-- `mascot(t, row)` — draws the tiny terminal character (see below), one blink.
+- `wink(t, row)` — draws the shared terminal-character wink (see below).
 
 `buildBoot()` is a bespoke builder: it predates the `Terminal` model and is kept
 unchanged to preserve the validated boot baseline byte-for-byte.
@@ -127,8 +127,8 @@ Palette (shared):
 
 ### Glyph coverage constraint
 
-The bitmap font only contains: `A–Z`, `0–9`, space, `>`, `.`, `,`, `:`, `_`,
-`-`, `/`, `(`, `)`, and lowercase `s h r p v`.
+The bitmap font only contains: `A–Z`, `0–9`, space, `>`, `<`, `.`, `,`, `:`,
+`_`, `-`, `/`, `(`, `)`, and lowercase `s h r p v`.
 
 Not available: `[ ] # + * = ? ! @ & % · ' "`.
 
@@ -174,22 +174,27 @@ Timing constants (centiseconds):
 | `HOLD_DELAY` | 200 | final readable hold |
 | `CLEAR_DELAY` | 3 | one row erased per frame during clean |
 | `RESET_DELAY` | 16 | brief empty terminal before restart |
+| `WINK_DELAY` | 18 | one frame of the terminal-character wink |
 
-### Terminal character
+### Terminal character (the wink)
 
-A tiny terminal character—two eyes and a mouth—is drawn from glyphs the font
-already has, as a single row:
+Every monitor ends with the same signature: the terminal character looks at the
+visitor, winks one eye, then returns to normal, and only then does the terminal
+clean itself. It is a single row drawn from glyphs the font already has:
 
 ```text
-(O_O)      looks
-(-_-)      blinks
-(O_O)      looks again
+O_O      looks
+0_<      winks (one eye closed)
+O_O      looks again
 ```
 
-It is not a logo and does not appear in every monitor. It shows up only after
-the `stack` and `github` results, as a small reward for reading to the end, then
-is cleared with the rest of the terminal. It is decorative and carries no
-information, so it is not part of the accessible text.
+`0` renders with a diagonal and `O` without, so the closed eye reads visually.
+The `<` glyph exists only for this wink. The sequence is short (`WINK_DELAY`
+each frame) and never sits on screen for long; the monitor's real result is held
+readably before it. The character is not a logo, carries no information and is
+not part of the accessible text—it is the personality of the machine. `boot`
+uses the same three frames, drawn directly because it is a bespoke one-shot
+builder.
 
 ---
 
@@ -207,14 +212,14 @@ information, so it is not part of the accessible text.
 The first five panels describe the internal shrpOS environment. `mikes-stash.gif`
 is different in kind: it is the one panel that points outside (see 5.6).
 
-### 5.1 `boot.gif` (baseline — unchanged)
+### 5.1 `boot.gif` (baseline — one-shot)
 
-Cold boot: base frame, five typed lines (`> INITIALIZING KERNEL...`,
-`> LOADING USER PROFILE...`, `> MOUNTING DEVELOPMENT DATABASE...`,
-`> CONNECTING TO GITHUB...`, `> LOADING PROJECT REGISTRY...`), then
-`SYSTEM READY` and `WELCOME, MARCELO.`. Cursor parks after `SYSTEM READY`,
-blinks, then holds. No NETSCAPE loop extension: it plays once. 51 frames,
-~7.08 s, ~30 KB.
+Cold boot: base frame, three typed lines (`> INITIALIZING KERNEL...`,
+`> LOADING USER PROFILE...`, `> STARTING SESSION...`), then `SYSTEM READY` and
+`WELCOME, MARCELO.`. Cursor parks after `SYSTEM READY`, blinks, then holds.
+Boot initializes the environment only; it does not mention GitHub, the project
+registry or the development database, which the other monitors cover. It ends on
+the wink (one-shot), with no NETSCAPE loop extension. 36 frames, ~6.2 s.
 
 ### 5.2 `profile.gif`
 
@@ -222,34 +227,32 @@ blinks, then holds. No NETSCAPE loop extension: it plays once. 51 frames,
 > WHOAMI
 > RESOLVING IDENTITY...
 USER     MARCELO
-STATUS   ONLINE
 ROLE     SOFTWARE DEVELOPER
 SHELL    /BIN/shrp
 NODE     GITHUB.COM/MIKEMEQUIS1
-BUILD    STABLE
 WELCOME BACK
+O_O  0_<  O_O
 ```
 
-Values come from the repository only. The terminal recognises its operator
-rather than dumping a database. After the fields settle: hold, clean bottom-up,
-reset. ~5.6 s.
+Values come from the repository only, trimmed to what identifies the operator.
+Distinct status/build lines are dropped. After the fields and `WELCOME BACK`
+settle: hold, wink, clean bottom-up, reset. ~5.7 s.
 
 ### 5.3 `projects.gif`
 
 ```text
 > QUERY ASHER
 > SEARCHING PROJECT INDEX...
-> FOUND 1 MATCH
-> RESOLVING MODULES...
 ASHER
-STATUS   ACTIVE DEVELOPMENT
-MODULES  CSHARP .NET HARMONY MONO
-         FNA LINUX WINDOWS
-LINK ESTABLISHED
+ACTIVE DEVELOPMENT
+CSHARP .NET HARMONY MONO
+FNA LINUX WINDOWS
+O_O  0_<  O_O
 ```
 
-The GIF shows the process of searching, matching and resolving the project; the
-README carries the authoritative description and links. ~6.8 s.
+Search, find, answer: one process line and one result block, without the former
+found/resolved/link lines. The README carries the authoritative description and
+links. ~6.1 s.
 
 ### 5.4 `stack.gif`
 
@@ -262,12 +265,12 @@ MONO ......... OK
 FNA .......... OK
 LINUX ........ OK
 WINDOWS ...... OK
-ALL SYSTEMS NOMINAL
-(O_O)
+STACK READY
+O_O  0_<  O_O
 ```
 
-Sequential verification; no proficiency levels or ratings. Ends with the
-terminal character blinking once. ~6.6 s.
+Sequential verification; no proficiency levels or ratings. One concise final
+state, then the wink. ~6.4 s.
 
 ### 5.5 `github.gif`
 
@@ -277,12 +280,12 @@ REPOSITORIES ....... OK
 ACTIVITY ........... OK
 PROFILE ............ ONLINE
 SYNC COMPLETE
-NO ANOMALIES FOUND
-(O_O)
+O_O  0_<  O_O
 ```
 
 Fictional terminal presentation; no live numbers and no claim of a real API
-request. Ends with the terminal character blinking once. ~5.2 s.
+request. `SYNC COMPLETE` is the single result (the former `NO ANOMALIES FOUND`
+was redundant), then the wink. ~4.8 s.
 
 ### 5.6 `mikes-stash.gif` (external gateway)
 
@@ -290,14 +293,14 @@ request. Ends with the terminal character blinking once. ~5.2 s.
 > OPEN WEB_INTERFACE
 LOOKING OUTSIDE...
 CONNECTION ESTABLISHED
-(O_O)
 MIKES STASH
+O_O  0_<  O_O
 ```
 
 Unlike the five internal monitors, this panel is a gateway rather than a status
-display. The terminal looks outside itself, then names the destination. The
-terminal character appears here *before* the destination resolves, so the panel
-reads as curiosity about the outside rather than a diagnostic.
+display. The terminal looks outside itself, confirms the link, then names the
+destination as the final result; the wink comes after. The README wraps the GIF
+in a clickable anchor.
 
 - The absolute destination is `https://mikesstash.com.br`.
 - The GIF does not link anywhere on its own. The README wraps the image in an
@@ -379,9 +382,9 @@ node scripts/generate-monitors.mjs
 
 Given the same dimensions, palette, font, frames and delays the encoder
 produces byte-identical output; there is no network, clock, randomness or
-environment access. `boot.gif` regenerates to the same hash as the original
-baseline. Re-running the generator a second time yields identical SHA-256
-hashes for all five GIFs.
+environment access. Re-running the generator a second time yields identical
+SHA-256 hashes for all six GIFs. The website terminal does not fetch anything,
+so generation is independent of `mikesstash.com.br` being online.
 
 Obsolete assets (`assets/shrpOS-*.svg`) and their generator
 (`scripts/generate-profile.mjs`) have been removed; the GIF monitors supersede
