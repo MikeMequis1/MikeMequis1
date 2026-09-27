@@ -1,28 +1,15 @@
-<p align="center"><strong>shrpOS</strong> — a small, original fictional terminal with a mind of its own.</p>
-
 <div align="center">
 <table>
   <tr>
-    <td align="center"><img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: a terminal session that initializes the system and ends on SYSTEM READY and a welcome message" width="360"></td>
-    <td align="center"><img src="./assets/monitors/profile.gif" alt="shrpOS profile monitor: a WHOAMI terminal session revealing user Marcelo, status online, role software developer, shell /bin/shrp, node github.com/MikeMequis1 and build stable" width="420"></td>
+    <td align="center"><img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: startup sequence reaching SYSTEM READY and a greeting" width="360"></td>
+    <td align="center"><img src="./assets/monitors/profile.gif" alt="shrpOS operator monitor: a WHOAMI session showing Marcelo, software developer, working in C#, .NET, FNA on Linux and Windows, with GitHub online" width="420"></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: a QUERY ASHER terminal session scanning the project registry and resolving the Asher project, its active-development status and its module list" width="520"></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="./assets/monitors/stack.gif" alt="shrpOS stack monitor: a CHECK STACK terminal session verifying C#, .NET, Harmony, Mono, FNA, Linux and Windows in sequence" width="360"></td>
-    <td align="center"><img src="./assets/monitors/github.gif" alt="shrpOS GitHub monitor: a SYNC terminal session confirming the repositories, activity and profile subsystems and reporting sync complete" width="420"></td>
+    <td align="center"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="520"></td>
+    <td align="center"><a href="https://mikesstash.com.br"><img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="520"></a></td>
   </tr>
 </table>
 </div>
-
-<p align="center">
-  <a href="https://mikesstash.com.br">
-    <img src="./assets/monitors/mikes-stash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="520">
-  </a>
-</p>
-
-The panels above are animated shrpOS terminal fragments — a few small, slightly odd sessions that type a command, poke around, print a result, blink at you and clear themselves away. The last one is the way out: click it to leave the fictional terminal and open **Mike's Stash**. shrpOS is not pretending to be an operating system; it is a tiny terminal personality that lives on this profile. Everything below is the human-readable layer.
 
 ## About
 
@@ -37,14 +24,6 @@ Most of my current work revolves around C# / .NET, game modding, Linux, and expe
 - Linux as both a development environment and a target platform
 - AI-assisted development and agent-based workflows
 
-## Asher
-
-**Asher** is a modding platform for *Dust: An Elysian Tail*, focused on making runtime patches and mods easier to develop, distribute and use.
-
-It spans C# / .NET, Harmony, Mono / FNA, and cross-platform experimentation between Windows and Linux, and it is still in active development.
-
-The repository and documentation links will be published here once the project is public. Until then, public repositories are listed at [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories).
-
 ## Things I like building
 
 - Developer tooling
@@ -54,8 +33,6 @@ The repository and documentation links will be published here once the project i
 - Small tools that make complicated workflows a little less annoying
 
 ## Technology
-
-Tools currently used, explored or relevant to active projects. The badges are the complete list; the stack monitor above verifies only the modules Asher is built on. No proficiency scores.
 
 <p>
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=C%23&color=00ff41&logo=csharp&logoColor=000000" alt="Language: C#">
@@ -89,15 +66,3 @@ Tools currently used, explored or relevant to active projects. The badges are th
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=MikeMequis1&background=0b120b&border=1f8f3f&stroke=00ff41&ring=00ff41&fire=00ff41&currStreakNum=00ff41&currStreakLabel=00ff41&sideNums=8bf0a4&sideLabels=8bf0a4&dates=1f8f3f&hide_border=false" alt="Contribution telemetry: current streak, longest streak and total public contributions for MikeMequis1">
 </p>
-
-Live counters come from the GitHub public API and may lag behind the profile. If a feed is unavailable, the authoritative numbers — including the primary language breakdown — remain visible at [github.com/MikeMequis1](https://github.com/MikeMequis1).
-
-## Maintenance
-
-The monitor GIFs in `assets/monitors/` are generated locally and committed, so viewing the profile needs no build step:
-
-```text
-node scripts/generate-monitors.mjs
-```
-
-Each monitor is a terminal timeline — type a command, process it, print a result, hold, clear and reset — defined in `scripts/generate-monitors.mjs`. The reusable terminal primitives and the GIF89a/LZW encoder live in `scripts/monitor.mjs`, and the local 5x7 bitmap font lives in `scripts/monitor-font.mjs`. Output is deterministic: re-running the command produces byte-identical GIFs. Architecture notes: [`docs/shrpos-monitors.md`](docs/shrpos-monitors.md).
