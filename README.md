@@ -1,93 +1,48 @@
-<p align="center">
-  <img src="./assets/shrpOS-header.svg" alt="shrpOS Personal Development Terminal — USER: MARCELO — STATUS: ONLINE — NODE: github.com/MikeMequis1 — SHELL: /bin/shrp — BUILD: STABLE" width="880">
-</p>
+<p align="center"><strong>shrpOS</strong> — an original fictional terminal interface.</p>
 
-<p align="center"><sub><code>shrpOS</code> is an original fictional terminal interface. The human behind it builds software.</sub></p>
+<div align="center">
+<table>
+  <tr>
+    <td align="center"><img src="./assets/monitors/boot.gif" alt="shrpOS boot monitor: a terminal session that initializes the system and ends on SYSTEM READY and a welcome message" width="360"></td>
+    <td align="center"><img src="./assets/monitors/profile.gif" alt="shrpOS profile monitor: a WHOAMI terminal session revealing user Marcelo, status online, role software developer, shell /bin/shrp, node github.com/MikeMequis1 and build stable" width="420"></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: a QUERY ASHER terminal session scanning the project registry and resolving the Asher project, its active-development status and its module list" width="520"></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="./assets/monitors/stack.gif" alt="shrpOS stack monitor: a CHECK STACK terminal session verifying C#, .NET, Harmony, Mono, FNA, Linux and Windows in sequence" width="360"></td>
+    <td align="center"><img src="./assets/monitors/github.gif" alt="shrpOS GitHub monitor: a SYNC terminal session confirming the repositories, activity and profile subsystems and reporting sync complete" width="420"></td>
+  </tr>
+</table>
+</div>
 
-<p align="center">
-  <img src="./assets/shrpOS-boot.svg" alt="shrpOS BIOS v1.1 boot: power on, POST, kernel, user profile, GitHub connection and project registry all report OK, then SYSTEM READY and WELCOME, MARCELO." width="880">
-</p>
+The panels above are animated shrpOS terminal fragments — ordinary little sessions that type a command, process it, print a result and clear. The rest of this page is the human-readable layer: who the profile belongs to, what is being built, and where to find it.
 
-```text
-╔════════════════════════════════════════════════════════════╗
-║ shrpOS :: PERSONAL DEVELOPMENT TERMINAL                    ║
-╠════════════════════════════════════════════════════════════╣
-║ USER: MARCELO                              STATUS: ONLINE  ║
-║ NODE: github.com/MikeMequis1              SHELL: /bin/shrp ║
-║ ROLE: SOFTWARE DEVELOPER                     BUILD: STABLE ║
-╚════════════════════════════════════════════════════════════╝
-```
+## About
 
-`▶` marks a collapsible module. Select one to open it.
+**Marcelo** — software developer building desktop tooling and modding infrastructure, mostly in C# / .NET.
 
-<details>
-<summary>▶ VIEW RAW BOOT LOG</summary>
+- Mode: build · break · learn · repeat
+- GitHub: [github.com/MikeMequis1](https://github.com/MikeMequis1)
 
-```text
-shrpOS BIOS v1.0  ::  cold boot
+Currently working on and exploring:
 
-> Power on ........................... OK
-> POST ............................... OK
-> Initializing kernel ................ OK
-> Loading user profile ............... OK
-> Connecting to GitHub ............... OK
-> Loading project registry ........... OK
+- **Asher** — a modding platform for *Dust: An Elysian Tail*.
+- Cross-platform support for Linux and Windows.
+- Modding runtimes and detours — Harmony, Mono, FNA.
+- AI / LLM assisted development workflows.
 
-SYSTEM READY_
-WELCOME, MARCELO.
-```
+## Asher
 
-</details>
+**Asher** is a modding platform for *Dust: An Elysian Tail*, in active development.
 
-<details>
-<summary>▶ ABOUT USER</summary>
+Built on C# · .NET · Harmony · Mono · FNA, targeting Linux and Windows.
 
-```text
-ALIAS ....... Marcelo
-NODE ........ github.com/MikeMequis1
-ROLE ........ software developer
-MODE ........ build · break · learn · repeat
-```
+The repository and documentation links will be published here once the project is public. Until then, public repositories are listed at [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories).
 
-</details>
+## Technology
 
-<details>
-<summary>▶ CURRENTLY EXPLORING</summary>
-
-- C# / .NET for desktop tooling and game-adjacent software
-- Modding runtimes and detours — Harmony, Mono, FNA
-- Linux as a first-class development and target platform
-- AI / LLM assisted development workflows
-
-</details>
-
-<details>
-<summary>▶ PROJECT DATABASE</summary>
-
-```text
-┌────────────────────────────────────────────────────────┐
-│ ─ PROJECT DATABASE ─────────────────────────────────── │
-│                                                        │
-│ [01] ASHER                                             │
-│                                                        │
-│      Dust: An Elysian Tail modding platform            │
-│                                                        │
-│      STATUS  :  ACTIVE DEVELOPMENT                     │
-│                                                        │
-│      MODULES :  C# · .NET · HARMONY · MONO             │
-│                 FNA · LINUX · WINDOWS                  │
-│                                                        │
-└────────────────────────────────────────────────────────┘
-```
-
-`Asher` is a modding platform for *Dust: An Elysian Tail*. Repository and documentation links will appear here once they are public. New entries are appended as `[02]`, `[03]`, and so on.
-
-</details>
-
-<details>
-<summary>▶ TECHNOLOGY MODULES</summary>
-
-Tools currently used, explored, or relevant to active projects. No proficiency scores.
+Tools currently used, explored or relevant to active projects. The badges are the complete list; the stack monitor above verifies only the modules Asher is built on. No proficiency scores.
 
 <p>
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=C%23&color=00ff41&logo=csharp&logoColor=000000" alt="Language: C#">
@@ -102,18 +57,13 @@ Tools currently used, explored, or relevant to active projects. No proficiency s
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=TOOL&message=AI%20%2F%20LLM&color=00ff41" alt="Tooling: AI / LLM">
 </p>
 
-</details>
+## Links
 
-<details>
-<summary>▶ GITHUB SUBSYSTEM</summary>
+- GitHub profile — [github.com/MikeMequis1](https://github.com/MikeMequis1)
+- Repositories — [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories)
+- Issues / contact — [github.com/MikeMequis1/MikeMequis1/issues](https://github.com/MikeMequis1/MikeMequis1/issues)
 
-```text
-┌─ GITHUB SUBSYSTEM ─────────────────────────────────────┐
-│ MODE    ......  LIVE                                   │
-│ SOURCE  ......  github public api + shields.io         │
-│ CACHE   ......  AUTO                                   │
-└────────────────────────────────────────────────────────┘
-```
+## GitHub activity
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=REPOSITORIES&url=https%3A%2F%2Fapi.github.com%2Fusers%2FMikeMequis1&query=$.public_repos" alt="Public repositories: live count">
@@ -129,38 +79,12 @@ Tools currently used, explored, or relevant to active projects. No proficiency s
 
 Live counters come from the GitHub public API and may lag behind the profile. If a feed is unavailable, the authoritative numbers — including the primary language breakdown — remain visible at [github.com/MikeMequis1](https://github.com/MikeMequis1).
 
-</details>
+## Maintenance
 
-<details>
-<summary>▶ EXTERNAL LINKS</summary>
-
-| MODULE | ENDPOINT | STATUS |
-| :-- | :-- | :-- |
-| GITHUB | [github.com/MikeMequis1](https://github.com/MikeMequis1) | ONLINE |
-| REPOSITORIES | [github.com/MikeMequis1?tab=repositories](https://github.com/MikeMequis1?tab=repositories) | ONLINE |
-| ISSUES / CONTACT | [github.com/MikeMequis1/MikeMequis1/issues](https://github.com/MikeMequis1/MikeMequis1/issues) | ONLINE |
-
-</details>
-
-<p align="center">
-  <img src="./assets/shrpOS-footer.svg" alt="shrpOS status bar: shrpOS v1.1 — session active, memory OK, network OK — EOF" width="880">
-</p>
-
-<details>
-<summary>▶ SYSTEM MAINTENANCE</summary>
-
-The three terminal panels in `assets/` are generated, not hand-drawn:
+The monitor GIFs in `assets/monitors/` are generated locally and committed, so viewing the profile needs no build step:
 
 ```text
-node scripts/generate-profile.mjs
+node scripts/generate-monitors.mjs
 ```
 
-Edit the colour tokens, text and timing in `scripts/generate-profile.mjs`, then re-run it. Generated SVGs are committed, so viewing the profile needs no build step. Boot and cursor effects are CSS keyframes inside the SVG — no JavaScript, and the final frame is fully readable if animation never runs. The README itself is plain GitHub Flavored Markdown.
-
-</details>
-
-<!--
-  shrpOS :: profile v1.1
-  Regenerate assets with: node scripts/generate-profile.mjs
-  shrpOS is an original fictional interface; no copyrighted branding is used.
--->
+Each monitor is a terminal timeline — type a command, process it, print a result, hold, clear and reset — defined in `scripts/generate-monitors.mjs`. The reusable terminal primitives and the GIF89a/LZW encoder live in `scripts/monitor.mjs`, and the local 5x7 bitmap font lives in `scripts/monitor-font.mjs`. Output is deterministic: re-running the command produces byte-identical GIFs. Architecture notes: [`docs/shrpos-monitors.md`](docs/shrpos-monitors.md).
