@@ -44,25 +44,25 @@ The project combines several areas I enjoy working with: **C#/.NET, runtime patc
 ## Tech stack
 
 <p align="center">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=C%23&color=00ff41&logo=csharp&logoColor=000000" alt="Language: C#">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=RUNTIME&message=.NET&color=00ff41&logo=dotnet&logoColor=000000" alt="Runtime: .NET">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=Python&color=00ff41&logo=python&logoColor=000000" alt="Language: Python">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=C%2B%2B&color=00ff41&logo=cplusplus&logoColor=000000" alt="Language: C++">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=DATA&message=SQL&color=00ff41" alt="Data: SQL">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=OS&message=Linux&color=00ff41&logo=linux&logoColor=000000" alt="Platform: Linux">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=OS&message=Windows&color=00ff41&logo=windows&logoColor=000000" alt="Platform: Windows">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=VCS&message=Git&color=00ff41&logo=git&logoColor=000000" alt="Version control: Git">
-  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=HOST&message=GitHub&color=00ff41&logo=github&logoColor=000000" alt="Host: GitHub">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=LANG&message=C%23&color=39ff14&logo=csharp&logoColor=ffffff" alt="Language: C#">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=RUNTIME&message=.NET&color=39ff14&logo=dotnet&logoColor=ffffff" alt="Runtime: .NET">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=LANG&message=Python&color=39ff14&logo=python&logoColor=ffffff" alt="Language: Python">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=LANG&message=C%2B%2B&color=39ff14&logo=cplusplus&logoColor=ffffff" alt="Language: C++">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=DATA&message=SQL&color=39ff14" alt="Data: SQL">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=OS&message=Linux&color=39ff14&logo=linux&logoColor=ffffff" alt="Platform: Linux">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=OS&message=Windows&color=39ff14&logo=windows&logoColor=ffffff" alt="Platform: Windows">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=VCS&message=Git&color=39ff14&logo=git&logoColor=ffffff" alt="Version control: Git">
+  <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=111111&label=HOST&message=GitHub&color=39ff14&logo=github&logoColor=ffffff" alt="Host: GitHub">
 </p>
 
 ## GitHub activity
 
 <p align="center">
-  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=REPOSITORIES&url=https%3A%2F%2Fapi.github.com%2Fusers%2FMikeMequis1&query=$.public_repos" alt="Public repositories: live count">
-  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=COMMITS&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fcommits%3Fq%3Dauthor%3AMikeMequis1&query=$.total_count" alt="Public commits authored: live count">
-  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=PULL%20REQUESTS&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dauthor%3AMikeMequis1%2Btype%3Apr&query=$.total_count" alt="Pull requests authored: live count">
-  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=ISSUES&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dauthor%3AMikeMequis1%2Btype%3Aissue&query=$.total_count" alt="Issues authored: live count">
-  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=0b120b&color=00ff41&logo=github&logoColor=000000&label=FOLLOWERS&url=https%3A%2F%2Fapi.github.com%2Fusers%2FMikeMequis1&query=$.followers" alt="Followers: live count">
+  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=111111&color=39ff14&logo=github&logoColor=ffffff&label=REPOSITORIES&url=https%3A%2F%2Fapi.github.com%2Fusers%2FMikeMequis1&query=$.public_repos" alt="Public repositories: live count">
+  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=111111&color=39ff14&logo=github&logoColor=ffffff&label=COMMITS&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fcommits%3Fq%3Dauthor%3AMikeMequis1&query=$.total_count" alt="Public commits authored: live count">
+  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=111111&color=39ff41&logo=github&logoColor=ffffff&label=PULL%20REQUESTS&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dauthor%3AMikeMequis1%2Btype%3Apr&query=$.total_count" alt="Pull requests authored: live count">
+  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=111111&color=39ff14&logo=github&logoColor=ffffff&label=ISSUES&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dauthor%3AMikeMequis1%2Btype%3Aissue&query=$.total_count" alt="Issues authored: live count">
+  <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&labelColor=111111&color=39ff14&logo=github&logoColor=ffffff&label=FOLLOWERS&url=https%3A%2F%2Fapi.github.com%2Fusers%2FMikeMequis1&query=$.followers" alt="Followers: live count">
 </p>
 
 <p align="center">
