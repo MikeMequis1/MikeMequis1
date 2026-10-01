@@ -31,15 +31,15 @@ I particularly enjoy projects that sit somewhere between **application developme
 - Tools that simplify complicated workflows
 - Small projects that turn curiosity into something useful
 
-## Featured project
+## Featured projects
 
-### Asher
+### [Asher](https://github.com/MikeMequis1/Asher)
 
-**Asher** is a cross-platform modding platform for *Dust: An Elysian Tail*, focused on providing a structured runtime and tooling for game modifications on Windows and Linux.
+**Asher** is a cross-platform modding platform for *Dust: An Elysian Tail*. What started as an experiment in game modding grew into a larger project involving **C#/.NET, runtime patching, reverse engineering, Linux, cross-platform development, and developer tooling**.
 
-The project combines several areas I enjoy working with: **C#/.NET, runtime patching, reverse engineering, cross-platform development, game technology, and developer tooling**.
+### [Mike's Stash](https://mikesstash.com.br)
 
-→ [View Asher on GitHub](https://github.com/MikeMequis1/Asher)
+**Mike's Stash** is my personal space on the web — part digital garden, part portfolio, and part collection of the things I find interesting. Built around **Obsidian and a heavily customized Digital Garden**, the site has grown into a project of its own, with custom themes, interactive components, multilingual content, and a growing collection of personal projects, drawings, experiments, and discoveries.
 
 ## Tech stack
 
