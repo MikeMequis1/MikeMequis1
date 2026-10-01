@@ -4,32 +4,46 @@
 </p>
 
 <p align="center">
-  <img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="400">
+  <a href="https://github.com/MikeMequis1/Asher"><img src="./assets/monitors/projects.gif" alt="shrpOS project monitor: querying the registry and resolving Asher, a modding platform for Dust: An Elysian Tail in active development" width="400"></a>
   <a href="https://mikesstash.com.br"><img src="./assets/monitors/mikesstash.gif" alt="shrpOS external connection terminal — open Mike's Stash" width="400"></a>
 </p>
 
 ## About
 
-I'm **Marcelo**, a software developer interested in building tools, runtime systems, and strange little projects that sit somewhere between application development and games.
+I'm **Marcelo**, a software developer focused on **C#/.NET**, with an interest in building tools, runtime systems, and cross-platform software.
+
+I particularly enjoy projects that sit somewhere between **application development, game technology, and infrastructure** — especially when they involve understanding how existing systems work and finding practical ways to extend or improve them.
 
 ### Currently exploring
 
-- C# / .NET for desktop tooling and game-adjacent software
-- Modding runtimes and detours — Harmony, Mono and FNA
-- Linux as both a development environment and a target platform
-- AI-assisted development and agent-based workflows
+- C# / .NET for application and developer tooling
+- Modding runtimes, patching, and detours — Harmony, Mono, and FNA
+- Cross-platform development for Windows and Linux
+- Software architecture and maintainable project structure
+- AI-assisted development and agent-based engineering workflows
 
-## Things I like building
+### Things I like building
 
 - Developer tooling
 - Modding infrastructure
-- Runtime experiments
+- Runtime and framework experiments
 - Cross-platform desktop software
-- Small tools that make complicated workflows a little less annoying
+- Tools that simplify complicated workflows
+- Small projects that turn curiosity into something useful
 
-## Technology
+## Featured project
 
-<p>
+### Asher
+
+**Asher** is a cross-platform modding platform for *Dust: An Elysian Tail*, focused on providing a structured runtime and tooling for game modifications on Windows and Linux.
+
+The project combines several areas I enjoy working with: **C#/.NET, runtime patching, reverse engineering, cross-platform development, game technology, and developer tooling**.
+
+→ [View Asher on GitHub](https://github.com/MikeMequis1/Asher)
+
+## Tech stack
+
+<p align="center">
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=C%23&color=00ff41&logo=csharp&logoColor=000000" alt="Language: C#">
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=RUNTIME&message=.NET&color=00ff41&logo=dotnet&logoColor=000000" alt="Runtime: .NET">
   <img src="https://img.shields.io/static/v1?style=flat-square&labelColor=0b120b&label=LANG&message=Python&color=00ff41&logo=python&logoColor=000000" alt="Language: Python">
